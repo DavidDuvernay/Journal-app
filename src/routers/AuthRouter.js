@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from "react-router-dom";import { LoginScreen } from '../components/auth/Login Screen';
+import { Switch, Route, Redirect } from "react-router-dom";import { LoginScreen } from '../components/auth/LoginScreen';
 import { RegisterScreen } from '../components/auth/RegisterScreen';
 
 export const AuthRouter = () => {
