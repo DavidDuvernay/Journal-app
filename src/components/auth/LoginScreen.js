@@ -1,33 +1,62 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
+import validator from 'validator';
+import { removeError, setError } from '../../actions/ui';
 import { startGoogleLogin, startLoginEmailPassword } from '../../actions/auth';
 
 export const LoginScreen = () => {
 
     const dispatch = useDispatch();
 
+    const { loading, msgError} = useSelector( state => state.ui)
+
     const [ formValues, handleInputChange ] = useForm({
         email: 'david@gmail.com',
-        password: '123456',
+        password: '123123',
     });
 
     const { email, password } = formValues;
 
     const handleLogin = (e) => {
         e.preventDefault()
-        dispatch(startLoginEmailPassword(email, password));
+
+        if(loginIsValid()){
+            dispatch(startLoginEmailPassword(email, password));
+        }
     };
 
 const handleGoogleLogin = () => {
     dispatch(startGoogleLogin())
 };
 
+const loginIsValid = () => {
+    
+    if(!validator.isEmail(email)){
+        dispatch(setError('Email not valid'))
+        return false
+    } if( password.length < 5 ){
+        dispatch(setError('Incorrect password'))
+        return false
+    }
+     
+    removeError()
+    return true
+};
+
     return (
         <div>
             <h3 className= 'auth__tittle'>Login</h3>
             <form onSubmit= { handleLogin }>
+
+                {
+                    msgError && 
+                    (<div className= 'auth__alert-error'>
+                        { msgError }
+                    </div>)
+                }
+                
                 <input
                     type= 'text'
                     placeholder= 'Email'
@@ -49,6 +78,7 @@ const handleGoogleLogin = () => {
                 <button
                     type= 'submit'
                     className= 'btn btn-primary btn-block'
+                    disabled= { loading }
                 >
                     Login
                 </button>
