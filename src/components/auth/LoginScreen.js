@@ -48,7 +48,10 @@ const loginIsValid = () => {
     return (
         <div>
             <h3 className= 'auth__tittle'>Login</h3>
-            <form onSubmit= { handleLogin }>
+            <form 
+                onSubmit= { handleLogin }
+                className= 'animate__animated animate__fadeIn animate__faster'
+            >
 
                 {
                     msgError && 

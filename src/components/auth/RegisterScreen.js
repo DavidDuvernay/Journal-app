@@ -15,8 +15,8 @@ export const RegisterScreen = () => {
     const [ formValues, handleInputChange ] = useForm({
         name: 'David',
         email: 'david@gmail.com',
-        password: '123',
-        password2: '123'
+        password: '123123',
+        password2: '123123'
     });
 
     const { name, email, password, password2 } = formValues;
@@ -51,7 +51,10 @@ export const RegisterScreen = () => {
     return (
         <div>
             <h3 className='auth__tittle'>Register</h3>
-            <form onSubmit= {handleRegister}>
+            <form 
+                onSubmit= {handleRegister}
+                className= 'animate__animated animate__fadeIn animate__faster'
+            >
                 {
                     msgError &&
                     (<div className= 'auth__alert-error'>
